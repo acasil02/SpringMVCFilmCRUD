@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,10 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			ps.setString(2, "%" + searchTerm + "%");
 			ResultSet rs = ps.executeQuery();
 
-				ArrayList<Integer> filmIdArr = new ArrayList<>();
-				while (rs.next()) {
-					filmIdArr.add(rs.getInt("film.id"));
-				}
+			ArrayList<Integer> filmIdArr = new ArrayList<>();
+			while (rs.next()) {
+				filmIdArr.add(rs.getInt("film.id"));
+			}
 			rs.close();
 			return filmIdArr;
 		} catch (SQLException e) {
@@ -129,7 +130,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 				PreparedStatement ps = conn.prepareStatement(sql);)
 
 		{
-			ps.setInt(1, actorId); 
+			ps.setInt(1, actorId);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				Actor actor = new Actor(rs.getInt("actor.id"), rs.getString("actor.first_name"),
@@ -141,7 +142,6 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			System.err.println("The application has encountered a SQL Exception.");
 			e.printStackTrace();
 		}
-		
 
 		return null;
 	}
@@ -154,8 +154,54 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 	@Override
 	public Film createFilm(Film film) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, USER, PWD);
+			conn.setAutoCommit(false);
+			String sql = "INSERT INTO film (title, description, realease_year, language_id, rental_duration, rental_rate, length, rating) VALUES (?,?,?,?,?,?,?,?)";
+
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getReleaseYear());
+			stmt.setString(4, film.getLanguage());
+			stmt.setString(5, film.getRentalDuration());
+			stmt.setDouble(6, film.getRentalRate());
+			stmt.setString(7, film.getLength());
+			stmt.setString(8, film.getRating());
+			int updateCount = stmt.executeUpdate();
+			
+			if (updateCount == 1) {
+				ResultSet keys = stmt.getGeneratedKeys();
+				if (keys.next()) {
+					int newFilmId = keys.getInt(1);
+					film.setId(newFilmId);
+				}
+
+				keys.close();
+
+			} else {
+				film = null;
+
+			}
+
+			conn.commit();
+
+			stmt.close();
+			conn.close();
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error encountered");
+				}
+			}
+		}
+
+		return film;
 	}
 
 	@Override
