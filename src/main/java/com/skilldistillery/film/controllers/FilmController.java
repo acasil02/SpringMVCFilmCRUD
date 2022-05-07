@@ -21,22 +21,23 @@ public class FilmController {
 	@Autowired
 	private FilmDAO filmDao;
 
-	@RequestMapping(path = {"/", "home.do"})
+	@RequestMapping(path = { "/", "home.do" })
 	public String home() {
 		return "WEB-INF/views/home.jsp";
 	}
-	
-	@RequestMapping(path = {"/", "createFilmForm.do"})
+
+	@RequestMapping(path = { "/", "createFilmForm.do" })
 	public String createFilmForm() {
 		return "WEB-INF/views/createFilm.jsp";
 	}
-	
 
 	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
-	public ModelAndView createFilm(Integer id, String title, String description, int releaseYear, String language, String rentalDuration,
-			double rentalRate, String length, double replacementCost, String rating, String specitalFeatures, List<Actor> cast, List<Category> categories, HttpSession session) {
+	public ModelAndView createFilm(Integer id, String title, String description, int releaseYear, String language,
+			String rentalDuration, double rentalRate, String length, double replacementCost, String rating,
+			String specitalFeatures, List<Actor> cast, List<Category> categories, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		Film film = filmDao.createFilm(new Film(id, title, description, releaseYear, language, rentalDuration, rentalRate, length, replacementCost, rating, specitalFeatures, cast, categories));
+		Film film = filmDao.createFilm(new Film(id, title, description, releaseYear, language, rentalDuration,
+				rentalRate, length, replacementCost, rating, specitalFeatures, cast, categories));
 		System.out.println("*************INSIDE CONTROLLER FILM: " + film);
 		mv.addObject("film", film);
 		mv.setViewName("result");
@@ -44,12 +45,5 @@ public class FilmController {
 
 		return mv;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

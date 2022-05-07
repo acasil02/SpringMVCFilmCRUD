@@ -36,7 +36,12 @@
 				<input type="text" name="rentalDuration"><br>
 		
 				<label for="filmRentalRate">Rental Rate:</label> 
-				<input type="text" name="rentalRate"><br>
+				<select name="rentalRate"><br>
+  						<option value="oneDay">1 Day</option>
+  						<option value="twoDays">2 Day</option>
+  						<option value="threeDays">3 Day</option>
+  						<option value="sevenDays">7 Day</option>
+  						</select><br>
 				
 				<label for="filmLength">Length:</label> 
 				<input type="text" name="length"><br>
@@ -61,12 +66,6 @@
   						<option value="Behind the Scenes">Behind the Scenes</option>
   						</select><br>
   						
-				
-				<label for="filmCast">Cast:</label> 
-				<input type="text" name="cast"><br>
-				
-				<label for="filmCategories">Categories:</label> 
-				<input type="text" name="categories"><br>
 
 				
 				<input type="submit">
