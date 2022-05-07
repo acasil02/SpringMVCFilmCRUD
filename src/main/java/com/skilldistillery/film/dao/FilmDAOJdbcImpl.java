@@ -11,6 +11,7 @@ import com.skilldistillery.film.entities.Film;
 
 @Component
 public class FilmDAOJdbcImpl implements FilmDAO {
+<<<<<<< HEAD
 
 	@Override
 	public Film findFilmById(int filmId) {
@@ -60,4 +61,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		return null;
 	}
 
+=======
+	
+>>>>>>> 903c3324c9862ffc6c0acbb3240e7debed0a2b00
 }
