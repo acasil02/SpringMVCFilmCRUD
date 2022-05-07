@@ -15,7 +15,7 @@ import com.skilldistillery.film.entities.Film;
 
 public class FilmDAOJdbcImpl implements FilmDAO {
 
-	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
+	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
 	private static final String USER = "student";
 	private static final String PWD = "student";
 
@@ -172,27 +172,27 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			stmt.setString(9, film.getRating());
 			stmt.setString(10, film.getSpecitalFeatures());
 			int updateCount = stmt.executeUpdate();
-			
-			if (updateCount == 1) {
+
+			try {
+				int cf = stmt.executeUpdate();
+				conn.commit();
+				System.out.println(cf + "Film Added");
 				ResultSet keys = stmt.getGeneratedKeys();
 				if (keys.next()) {
-					int newFilmId = keys.getInt(1);
-					film.setId(newFilmId);
+					System.out.println("New ID " + keys.getInt(1));
 				}
 
-				keys.close();
-
-			} else {
-				film = null;
-
+			} catch (SQLException e) {
+				System.out.println("ERROR CREATING FILM");
 			}
 
-			conn.commit();
-
+			
 			stmt.close();
 			conn.close();
 
-		} catch (SQLException sqle) {
+		} catch (
+
+		SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
 				try {

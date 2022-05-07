@@ -1,5 +1,6 @@
 package com.skilldistillery.film.controllers;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.dao.FilmDAO;
 import com.skilldistillery.film.entities.Actor;
@@ -35,36 +37,44 @@ public class FilmController {
 	public String createFilmForm() {
 		return "WEB-INF/views/createFilm.jsp";
 	}
-<<<<<<< HEAD
-=======
 
 	@RequestMapping(path = { "/", "getFilmFromId.do" })
-	public String getFilFromID() {
+	public String getFilmFromID() {
 		return "WEB-INF/views/findByID.jsp";
 	}
->>>>>>> b182715d3e8d3c48f0ac7f5ff69e0bff1b7d40f4
 
+//	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
+//	public ModelAndView createFilm(Integer id, String title, String description, int releaseYear, String language,
+//			String rentalDuration, double rentalRate, String length, double replacementCost, String rating,
+//			String specitalFeatures, List<Actor> cast, List<Category> categories, HttpSession session) {
+//		ModelAndView mv = new ModelAndView();
+//		Film film = filmDao.createFilm(new Film(id, title, description, releaseYear, language, rentalDuration,
+//				rentalRate, length, replacementCost, rating, specitalFeatures, cast, categories));
+//		System.out.println("*************INSIDE CONTROLLER FILM: " + film);
+//		mv.addObject("film", film);
+//		mv.setViewName("result");
+//		session.setAttribute("film", film);
+//
+//		return mv;
+//	}
+	
 	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
-	public ModelAndView createFilm(Integer id, String title, String description, int releaseYear, String language,
-			String rentalDuration, double rentalRate, String length, double replacementCost, String rating,
-			String specitalFeatures, List<Actor> cast, List<Category> categories, HttpSession session) {
+	public ModelAndView createFilm(Film film, RedirectAttributes redi) {
 		ModelAndView mv = new ModelAndView();
-		Film film = filmDao.createFilm(new Film(id, title, description, releaseYear, language, rentalDuration,
-				rentalRate, length, replacementCost, rating, specitalFeatures, cast, categories));
-		System.out.println("*************INSIDE CONTROLLER FILM: " + film);
-		mv.addObject("film", film);
-		mv.setViewName("result");
-		session.setAttribute("film", film);
-
+		Film createdFilm = filmDao.createFilm(film);
+		redi.addFlashAttribute("Film", createdFilm);
+		mv.setViewName("WEB-INF/views/filmCreated.jsp");
+		
 		return mv;
 	}
+	
+	
+	
+	
 
-<<<<<<< HEAD
-=======
 	@RequestMapping(path = "findByID.do", method = RequestMethod.GET)
 	public Film findFilmById(int filmId) {
 		return null;
 
 	}
->>>>>>> b182715d3e8d3c48f0ac7f5ff69e0bff1b7d40f4
 }
