@@ -33,10 +33,11 @@ public class FilmController {
 	
 
 	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
-	public ModelAndView createFilm(int id, String title, String description, int releaseYear, String language, String rentalDuration,
+	public ModelAndView createFilm(Integer id, String title, String description, int releaseYear, String language, String rentalDuration,
 			double rentalRate, String length, double replacementCost, String rating, String specitalFeatures, List<Actor> cast, List<Category> categories, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDao.createFilm(new Film(id, title, description, releaseYear, language, rentalDuration, rentalRate, length, replacementCost, rating, specitalFeatures, cast, categories));
+		System.out.println("*************INSIDE CONTROLLER FILM: " + film);
 		mv.addObject("film", film);
 		mv.setViewName("result");
 		session.setAttribute("film", film);
