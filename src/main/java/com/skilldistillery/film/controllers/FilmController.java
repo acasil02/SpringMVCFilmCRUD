@@ -57,8 +57,13 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "findByID.do", method = RequestMethod.GET)
-	public Film findFilmById(int filmId) {
-		return null;
+	public ModelAndView findFilmById(int filmId) {
+		ModelAndView mv = new ModelAndView();
+		Film film = filmDao.findFilmById(filmId);
+		mv.addObject("film", film);
+		mv.setViewName("WEB-INF/views/resultsFindbyInt.jsp");
+
+		return mv;
 
 	}
 }

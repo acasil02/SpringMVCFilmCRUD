@@ -12,7 +12,7 @@
 <h3>Create Film</h3>
 	<div class="creatFilmMasterDiv">
 		<div class="createFilmFormDiv">
-			<form action="CreateFilm.do" method="post">
+			<form action="CreateFilm.do" method="POST">
 				<label for="filmTitle">Film Title:</label> 
 				<input type="text" name="title"><br>
 			

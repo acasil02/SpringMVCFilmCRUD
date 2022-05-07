@@ -7,6 +7,12 @@
 <title>Find Movie by Movie ID</title>
 </head>
 <body>
-<h1>Test</h1>
+<h1>Find film by ID</h1>
+<form action="findByID.do" method="GET">
+<label for="id">ID Number:</label> 
+				<input type="text" name="filmId">
+				<input type="submit">
+</form>
+				
 </body>
 </html>
