@@ -1,5 +1,10 @@
 package com.skilldistillery.film.controllers;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -30,6 +35,14 @@ public class FilmController {
 	public String createFilmForm() {
 		return "WEB-INF/views/createFilm.jsp";
 	}
+<<<<<<< HEAD
+=======
+
+	@RequestMapping(path = { "/", "getFilmFromId.do" })
+	public String getFilFromID() {
+		return "WEB-INF/views/findByID.jsp";
+	}
+>>>>>>> b182715d3e8d3c48f0ac7f5ff69e0bff1b7d40f4
 
 	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
 	public ModelAndView createFilm(Integer id, String title, String description, int releaseYear, String language,
@@ -46,4 +59,12 @@ public class FilmController {
 		return mv;
 	}
 
+<<<<<<< HEAD
+=======
+	@RequestMapping(path = "findByID.do", method = RequestMethod.GET)
+	public Film findFilmById(int filmId) {
+		return null;
+
+	}
+>>>>>>> b182715d3e8d3c48f0ac7f5ff69e0bff1b7d40f4
 }
