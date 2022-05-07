@@ -24,22 +24,22 @@
 			
 				<label for="filmlanguage">Language:</label> 
 						<select name="language">
-  						<option value="English">English</option>
-  						<option value="Italian">Italian</option>
-  						<option value="Japanese">Japanese</option>
-  						<option value="Mandarin">Mandarin</option>
-  						<option value="French">French</option>
-  						<option value="German">German</option>
+  						<option value="1">English</option>
+  						<option value="2">Italian</option>
+  						<option value="3">Japanese</option>
+  						<option value="4">Mandarin</option>
+  						<option value="5">French</option>
+  						<option value="6">German</option>
   						</select><br>
 				
 				<label for="filmRentalDuration">Rental Duration:</label> 
-				<input type="text" name="rentalDuration"><br>
+				<input type="number" name="rentalDuration"><br>
 		
 				<label for="filmRentalRate">Rental Rate:</label> 
-				<input type="text" name="rentalRate"><br>
+				<input type="number" name="rentalRate"><br>
 				
 				<label for="filmLength">Length:</label> 
-				<input type="text" name="length"><br>
+				<input type="number" name="length"><br>
 				
 				<label for="filmReplacementCost">Replacement Cost:</label> 
 				<input type="text" name="replacementCost"><br>
@@ -54,19 +54,14 @@
   						</select><br>
 				
 				<label for="filmSpecitalFeatures">Special Features:</label> 
-						<select name="specialFeatures"><br>
+					<input type="text" name="specialFeatures"><br>
+						<!-- <select name="specialFeatures"><br>
   						<option value="Trailers">Trailers</option>
   						<option value="Commentaries">Commentaries</option>
   						<option value="Deleted Scenes">Deleted Scenes</option>
   						<option value="Behind the Scenes">Behind the Scenes</option>
-  						</select><br>
+  						</select><br> -->
   						
-				
-				<label for="filmCast">Cast:</label> 
-				<input type="text" name="cast"><br>
-				
-				<label for="filmCategories">Categories:</label> 
-				<input type="text" name="categories"><br>
 
 				
 				<input type="submit">

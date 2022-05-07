@@ -158,7 +158,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		try {
 			conn = DriverManager.getConnection(URL, USER, PWD);
 			conn.setAutoCommit(false);
-			String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
@@ -171,30 +171,28 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			stmt.setDouble(8, film.getReplacementCost());
 			stmt.setString(9, film.getRating());
 			stmt.setString(10, film.getSpecitalFeatures());
-			stmt.setObject(11, film.getCast());
-			stmt.setObject(12, film.getCategories());
 			int updateCount = stmt.executeUpdate();
-			
-			if (updateCount == 1) {
+
+			try {
+				int cf = stmt.executeUpdate();
+				conn.commit();
+				System.out.println(cf + "Film Added");
 				ResultSet keys = stmt.getGeneratedKeys();
 				if (keys.next()) {
-					int newFilmId = keys.getInt(1);
-					film.setId(newFilmId);
+					System.out.println("New ID " + keys.getInt(1));
 				}
 
-				keys.close();
-
-			} else {
-				film = null;
-
+			} catch (SQLException e) {
+				System.out.println("ERROR CREATING FILM");
 			}
 
-			conn.commit();
-
+			
 			stmt.close();
 			conn.close();
 
-		} catch (SQLException sqle) {
+		} catch (
+
+		SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
 				try {
