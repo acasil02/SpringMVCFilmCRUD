@@ -25,6 +25,12 @@ public class FilmController {
 	public String home() {
 		return "WEB-INF/views/home.jsp";
 	}
+	
+	@RequestMapping(path = {"/", "createFilmForm.do"})
+	public String createFilmForm() {
+		return "WEB-INF/views/createFilm.jsp";
+	}
+	
 
 	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
 	public ModelAndView createFilm(int id, String title, String description, int releaseYear, String language, String rentalDuration,

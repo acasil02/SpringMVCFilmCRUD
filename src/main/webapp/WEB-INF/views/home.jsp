@@ -10,5 +10,19 @@
 
 <h1>Welcome to the Film Site</h1>
 
+<form action="createFilmForm.do">
+<input type="submit" value="Create Film">
+
+
+
+
+
+</form>
+
+
+
+
+
+
 </body>
 </html>
