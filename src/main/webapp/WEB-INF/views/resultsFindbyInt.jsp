@@ -10,14 +10,22 @@
 </head>
 <body>
 	<c:choose>
-		<c:when test="${! empty film}">
-			<ul>
-				<li>${film.title }</li>
-			</ul>
+		<c:when test="${!empty film}">
+		<strong>${film.title }</strong> <br>
+		Released in: ${film.releaseYear } <br>
+				${film.description } <br>
+				Starring: ${film.cast } <br>
+				${film.categories }
 		</c:when>
 		<c:otherwise>
-			<p>No film found</p>
+			<h1>No film found</h1>
 		</c:otherwise>
 	</c:choose>
+	<form action="getFilmFromId.do?">
+    <input type="submit" value="Go back to Input another ID" />
+</form>
+	<form action="home.do">
+    <input type="submit" value="Go Home" />
+</form>
 </body>
 </html>

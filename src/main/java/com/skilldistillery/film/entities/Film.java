@@ -18,9 +18,8 @@ public class Film {
 	private List<Category> categories;
 	
 
-	public Film() {
-		
-	}
+	public Film() {}
+	
 	
 	
 	public Film(int id, String title, String description, int releaseYear, String language, String rentalDuration,
