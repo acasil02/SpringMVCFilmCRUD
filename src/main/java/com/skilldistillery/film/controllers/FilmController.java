@@ -43,34 +43,15 @@ public class FilmController {
 		return "WEB-INF/views/findByID.jsp";
 	}
 
-//	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
-//	public ModelAndView createFilm(Integer id, String title, String description, int releaseYear, String language,
-//			String rentalDuration, double rentalRate, String length, double replacementCost, String rating,
-//			String specitalFeatures, List<Actor> cast, List<Category> categories, HttpSession session) {
-//		ModelAndView mv = new ModelAndView();
-//		Film film = filmDao.createFilm(new Film(id, title, description, releaseYear, language, rentalDuration,
-//				rentalRate, length, replacementCost, rating, specitalFeatures, cast, categories));
-//		System.out.println("*************INSIDE CONTROLLER FILM: " + film);
-//		mv.addObject("film", film);
-//		mv.setViewName("result");
-//		session.setAttribute("film", film);
-//
-//		return mv;
-//	}
-	
 	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
 	public ModelAndView createFilm(Film film, RedirectAttributes redi) {
 		ModelAndView mv = new ModelAndView();
 		Film createdFilm = filmDao.createFilm(film);
 		redi.addFlashAttribute("Film", createdFilm);
 		mv.setViewName("WEB-INF/views/filmCreated.jsp");
-		
+
 		return mv;
 	}
-	
-	
-	
-	
 
 	@RequestMapping(path = "findByID.do", method = RequestMethod.GET)
 	public ModelAndView findFilmById(int filmId) {
@@ -82,4 +63,56 @@ public class FilmController {
 		return mv;
 
 	}
+
+	@RequestMapping(path = "deleteFilm.do")
+	public ModelAndView deleteFilm(int id) throws SQLException {
+		ModelAndView mv = new ModelAndView();
+		Film dbFilm = filmDao.findFilmById(id);
+
+		if (dbFilm != null) {
+			filmDao.deleteFilm(dbFilm);
+			mv.addObject(dbFilm);
+		}
+
+		mv.setViewName("WEB-INF/views/deleteFilm.jsp");
+		return mv;
+	}
+
+	@RequestMapping(path = "updateFilmForm.do", params = "filmId", method = RequestMethod.GET)
+	public ModelAndView updateFilmForm(HttpSession session, Integer filmId) {
+		ModelAndView mv = new ModelAndView();
+		Film current = filmDao.findFilmById(filmId);
+
+		mv.addObject("film", current);
+		mv.setViewName("filmUpdate");
+
+		return mv;
+	}
+
+	@RequestMapping(path = "updateFilm.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
+		ModelAndView mv = new ModelAndView();
+
+		filmDao.updateFilm(film);
+
+		boolean isUpdated = film.getId() > 0 ? true : false;
+		redir.addFlashAttribute("isFilmUpdated", isUpdated);
+
+		boolean updateConfirm = true;
+		redir.addFlashAttribute("updateConfirm", updateConfirm);
+
+		mv.setViewName("redirect:filmUpdated.do");
+
+		return mv;
+
+	}
+
+	@RequestMapping(path = "filmUpdated.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView filmUpdated() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("delete");
+
+		return mv;
+	}
+
 }

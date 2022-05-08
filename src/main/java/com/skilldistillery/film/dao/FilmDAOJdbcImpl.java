@@ -186,7 +186,6 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 				System.out.println("ERROR CREATING FILM");
 			}
 
-			
 			stmt.close();
 			conn.close();
 
@@ -208,14 +207,91 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 	@Override
 	public boolean deleteFilm(Film film) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = null;
+
+		try {
+			conn = DriverManager.getConnection(URL, USER, PWD);
+			conn.setAutoCommit(false);
+			String sql = "DELETE FROM film WHERE film.id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, film.getId());
+			int updateCount = stmt.executeUpdate();
+			if (updateCount == 1) {
+				Film test = null;
+				test = findFilmById(film.getId());
+				conn.commit();
+				return true;
+			} else {
+				conn.rollback();
+				return false;
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error encountered");
+				}
+			}
+
+			return false;
+		}
 	}
 
 	@Override
 	public Film updateFilm(Film film) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+
+		try {
+			conn = DriverManager.getConnection(URL, USER, PWD);
+			conn.setAutoCommit(false);
+
+			String sql = "UPDATE film SET title=?, description=?, release_year=?, language_id=?, rental_duration=?, rental_rate=?, length=?, replacement_cost=?, rating=?, special_features=? WHERE film.id = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getReleaseYear());
+			stmt.setString(4, film.getLanguage());
+			stmt.setString(5, film.getRentalDuration());
+			stmt.setDouble(6, film.getRentalRate());
+			stmt.setString(7, film.getLength());
+			stmt.setDouble(8, film.getReplacementCost());
+			stmt.setString(9, film.getRating());
+			stmt.setString(10, film.getSpecitalFeatures());
+
+			int updateCount = stmt.executeUpdate();
+
+			if (updateCount == 1) {
+				ResultSet keys = stmt.getGeneratedKeys();
+				if (keys.next()) {
+					int updatedFilmId = keys.getInt(1);
+				}
+
+				keys.close();
+
+			} else {
+				film = null;
+
+			}
+
+			conn.commit();
+			stmt.close();
+			conn.close();
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error encountered");
+				}
+			}
+		}
+
+		return film;
 	}
 
 }

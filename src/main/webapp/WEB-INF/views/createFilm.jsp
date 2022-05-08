@@ -55,20 +55,9 @@
 				
 				<label for="filmSpecitalFeatures">Special Features:</label> 
 					<input type="text" name="specialFeatures"><br>
-						<!-- <select name="specialFeatures"><br>
-  						<option value="Trailers">Trailers</option>
-  						<option value="Commentaries">Commentaries</option>
-  						<option value="Deleted Scenes">Deleted Scenes</option>
-  						<option value="Behind the Scenes">Behind the Scenes</option>
-  						</select><br> -->
-  						
-
 				
 				<input type="submit">
 				
-				
-				
-	
 			</form>
 		</div>
 	</div>
