@@ -10,15 +10,18 @@
 </head>
 <body>
 	<c:choose>
-		<c:when test="${!empty film}">
+		<c:when test="${!empty films}">
+			<c:forEach var="film" items= "${films}" >
+			
 		<strong>${film.title }</strong> ${film.id }<br> 
 		Released in: ${film.releaseYear } <br>
 				${film.description } <br>
 				Starring: ${film.cast } <br>
-				${film.categories }
+				${film.categories } <br> <br>
+				</c:forEach>
 		</c:when>
 		<c:otherwise>
-			<h1>No film found</h1>
+			<h1>No films found</h1>
 		</c:otherwise>
 	</c:choose>
 	<form action="getFilmFromId.do?">
