@@ -17,7 +17,11 @@
 	<form action="getFilmFromId.do">
 		<input type ="submit" value="Look up film by ID">
 	</form>
-	
+
+	<form action="getFilmFromSearch.do">
+		<input type ="submit" value="Look up film by Search">
+	</form>
+
 
 
 
