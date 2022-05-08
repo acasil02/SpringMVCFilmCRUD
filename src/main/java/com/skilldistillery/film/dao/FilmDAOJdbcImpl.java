@@ -27,26 +27,37 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			e.printStackTrace();
 		}
 	}
+@Override
+	public List<Film> searchFilm(String searchTerm) {
+		List<Film> films = new ArrayList<>();
+		try {
+			Film film = null;
 
-	public ArrayList<Integer> searchFilm(String searchTerm, FilmDAO db) {
-		String sql = "SELECT film.id FROM film WHERE (film.title LIKE ? OR film.description LIKE ?)";
-		try (Connection conn = DriverManager.getConnection(URL, USER, PWD);
-				PreparedStatement ps = conn.prepareStatement(sql);) {
-			ps.setString(1, "%" + searchTerm + "%");
-			ps.setString(2, "%" + searchTerm + "%");
-			ResultSet rs = ps.executeQuery();
-
-			ArrayList<Integer> filmIdArr = new ArrayList<>();
+			Connection conn = DriverManager.getConnection(URL, USER, PWD);
+			String sql = "SELECT film.id, title, description, release_year, language_id, rental_duration, ";
+			sql += " rental_rate, length, replacement_cost, rating, special_features, language.name "
+					+ " FROM film JOIN language ON film.language_id = language.id WHERE title LIKE ? or description LIKE ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%" + searchTerm + "%");
+			stmt.setString(2, "%" + searchTerm + "%");
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				filmIdArr.add(rs.getInt("film.id"));
+				int filmId = rs.getInt("film.id");
+				film = new Film(rs.getInt("film.id"), rs.getString("film.title"), rs.getString("film.description"),
+						rs.getInt("film.release_year"), rs.getString("language.name"), rs.getString("rental_duration"),
+						rs.getDouble("film.rental_rate"), rs.getString("film.length"),
+						rs.getDouble("film.replacement_cost"), rs.getString("film.rating"),
+						rs.getString("film.special_features"), findActorsByFilmId(filmId),
+						findCategoriesByFilmId(filmId));
+				films.add(film);
 			}
-			rs.close();
-			return filmIdArr;
+			return films;
 		} catch (SQLException e) {
-			System.err.println("The application has encountered a SQL Exception.");
+
 			e.printStackTrace();
 		}
 		return null;
+		
 	}
 
 	@Override
@@ -146,11 +157,6 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		return null;
 	}
 
-	@Override
-	public ArrayList<Integer> searchFilm(String searchTerm) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Film createFilm(Film film) {
@@ -292,5 +298,4 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 		return film;
 	}
-
 }

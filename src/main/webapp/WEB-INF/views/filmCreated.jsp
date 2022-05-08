@@ -7,6 +7,10 @@
 <title>Film Created!</title>
 </head>
 <body>
+<h1>Film Created!</h1>
 
+<form action="home.do">
+    <input type="submit" value="Go Home" />
+</form>
 </body>
 </html>

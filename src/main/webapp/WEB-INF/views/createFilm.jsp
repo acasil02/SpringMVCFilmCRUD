@@ -56,7 +56,7 @@
 				<label for="filmSpecitalFeatures">Special Features:</label> 
 					<input type="text" name="specialFeatures"><br>
 				
-				<input type="submit">
+				<input type="submit" value="Submit" />
 				
 			</form>
 		</div>
@@ -72,4 +72,4 @@
 
 
 </body>
-</html>
+</html> 

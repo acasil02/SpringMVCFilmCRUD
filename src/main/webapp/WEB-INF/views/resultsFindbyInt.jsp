@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -11,8 +11,12 @@
 <body>
 	<c:choose>
 		<c:when test="${!empty film}">
+<<<<<<< HEAD
 			<strong>${film.title }</strong>
 			<br>
+=======
+		<strong>${film.title }</strong> ${film.id }<br> 
+>>>>>>> 23d4ded86761297aa075d177677c90bac60d3ac7
 		Released in: ${film.releaseYear } <br>
 				${film.description } <br>
 				Starring: ${film.cast } <br>
@@ -28,8 +32,19 @@
 	</c:choose>
 
 	<form action="getFilmFromId.do?">
+<<<<<<< HEAD
 		<input type="submit" value="Go back to Input another ID" />
 	</form>
+=======
+    <input type="submit" value="Go back to Input another ID" />
+</form>
+
+<form action="updateFilm.do">
+		<input type ="submit" value="Update Film">
+	</form>
+	
+
+>>>>>>> 23d4ded86761297aa075d177677c90bac60d3ac7
 	<form action="home.do">
 		<input type="submit" value="Go Home" />
 	</form>
