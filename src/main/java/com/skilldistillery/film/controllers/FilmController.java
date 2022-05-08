@@ -1,12 +1,6 @@
 package com.skilldistillery.film.controllers;
 
-import java.lang.ProcessBuilder.Redirect;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,8 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.dao.FilmDAO;
-import com.skilldistillery.film.entities.Actor;
-import com.skilldistillery.film.entities.Category;
 import com.skilldistillery.film.entities.Film;
 
 @Controller
@@ -59,24 +51,34 @@ public class FilmController {
 		Film film = filmDao.findFilmById(filmId);
 		mv.addObject("film", film);
 		mv.setViewName("WEB-INF/views/resultsFindbyInt.jsp");
-		
 
 		return mv;
 
 	}
 
-	@RequestMapping(path = "deleteFilm.do")
-	public ModelAndView deleteFilm(int id) throws SQLException {
+	@RequestMapping(path = "deleteFilm.do", params = "id", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView deleteFilm(Integer id, RedirectAttributes redir, HttpSession session) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 		Film dbFilm = filmDao.findFilmById(id);
-
 		if (dbFilm != null) {
-			filmDao.deleteFilm(dbFilm);
-			mv.addObject(dbFilm);
-		}
+		boolean isDeleted = filmDao.deleteFilm(dbFilm);
+		redir.addFlashAttribute("isFilmDeleted", isDeleted);
+		boolean confirmDeletion = true;
+		redir.addFlashAttribute("confirmDeletion", confirmDeletion);
 
+		}
+		
+//		mv.addObject(dbFilm);
+		mv.setViewName("redirect:filmDeleted.do");
+		return mv;
+	}
+
+	@RequestMapping(path = "filmDeleted.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView filmHasBeenDeleted() {
+		ModelAndView mv = new ModelAndView();
 		mv.setViewName("WEB-INF/views/deleteFilm.jsp");
 		return mv;
+
 	}
 
 	@RequestMapping(path = "updateFilmForm.do", params = "filmId", method = RequestMethod.GET)

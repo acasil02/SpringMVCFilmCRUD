@@ -62,7 +62,13 @@
 		</div>
 	</div>
 
-	<h1></h1>
+	<!-- <h1></h1>
+	<form action="createFilmForm.do">
+    <input type="submit" value="Go back to create another film" />
+</form>
+	<form action="home.do">
+    <input type="submit" value="Go Home" />
+</form> -->
 
 
 </body>

@@ -11,21 +11,27 @@
 <body>
 	<c:choose>
 		<c:when test="${!empty film}">
-		<strong>${film.title }</strong> <br>
+			<strong>${film.title }</strong>
+			<br>
 		Released in: ${film.releaseYear } <br>
 				${film.description } <br>
 				Starring: ${film.cast } <br>
 				${film.categories }
+				<form action="deleteFilm.do">
+				<input type="submit" value="Delete Film" />
+				<input style="display:none" name="id" value="${film.id}" />
+			</form>
 		</c:when>
 		<c:otherwise>
 			<h1>No film found</h1>
 		</c:otherwise>
 	</c:choose>
+
 	<form action="getFilmFromId.do?">
-    <input type="submit" value="Go back to Input another ID" />
-</form>
+		<input type="submit" value="Go back to Input another ID" />
+	</form>
 	<form action="home.do">
-    <input type="submit" value="Go Home" />
-</form>
+		<input type="submit" value="Go Home" />
+	</form>
 </body>
 </html>
