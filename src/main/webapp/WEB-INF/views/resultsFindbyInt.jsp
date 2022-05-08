@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -24,6 +24,12 @@
 	<form action="getFilmFromId.do?">
     <input type="submit" value="Go back to Input another ID" />
 </form>
+
+<form action="updateFilm.do">
+		<input type ="submit" value="Update Film">
+	</form>
+	
+
 	<form action="home.do">
     <input type="submit" value="Go Home" />
 </form>
