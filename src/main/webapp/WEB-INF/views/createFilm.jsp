@@ -14,16 +14,16 @@
 		<div class="createFilmFormDiv">
 			<form action="CreateFilm.do" method="POST">
 				<label for="filmTitle">Film Title:</label> 
-				<input type="text" name="title"><br>
+				<input type="text" name="title" required><br>
 			
 				<label for="filmDescription">Description:</label> 
-				<input type="text" name="description"><br>
+				<input type="text" name="description" required><br>
 			
 				<label for="filmReleaseYear">Release Year:</label> 
-				<input type="text" name="releaseYear"><br>
+				<input type="text" name="releaseYear" required><br>
 			
 				<label for="filmlanguage">Language:</label> 
-						<select name="language">
+						<select name="language" required>
   						<option value="1">English</option>
   						<option value="2">Italian</option>
   						<option value="3">Japanese</option>
@@ -33,19 +33,19 @@
   						</select><br>
 				
 				<label for="filmRentalDuration">Rental Duration:</label> 
-				<input type="number" name="rentalDuration"><br>
+				<input type="number" name="rentalDuration" required><br>
 		
 				<label for="filmRentalRate">Rental Rate:</label> 
-				<input type="number" name="rentalRate"><br>
+				<input type="number" name="rentalRate" required><br>
 				
 				<label for="filmLength">Length:</label> 
-				<input type="number" name="length"><br>
+				<input type="number" name="length" required><br>
 				
 				<label for="filmReplacementCost">Replacement Cost:</label> 
-				<input type="text" name="replacementCost"><br>
+				<input type="text" name="replacementCost" required><br>
 				
 				<label for="filmRating">Rating:</label> 
-				<select name="rating"><br>
+				<select name="rating" required><br>
   						<option value="G">G</option>
   						<option value="PG">PG</option>
   						<option value="PG13">PG13</option>
@@ -62,13 +62,7 @@
 		</div>
 	</div>
 
-	<!-- <h1></h1>
-	<form action="createFilmForm.do">
-    <input type="submit" value="Go back to create another film" />
-</form>
-	<form action="home.do">
-    <input type="submit" value="Go Home" />
-</form> -->
+	
 
 
 </body>
