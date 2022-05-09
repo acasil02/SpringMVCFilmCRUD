@@ -43,6 +43,24 @@ public class Film {
 
 	
 	
+	public Film(Integer id, String title, String description, int releaseYear, String language, String rentalDuration,
+			double rentalRate, String length, double replacementCost, String rating, String specitalFeatures) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.language = language;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
+		this.specitalFeatures = specitalFeatures;
+	}
+
+
+
 	public List<Category> getCategories() {
 		return categories;
 	}
@@ -87,7 +105,7 @@ public class Film {
 		this.description = description;
 	}
 
-	public int getReleaseYear() {
+	public Integer getReleaseYear() {
 		return releaseYear;
 	}
 

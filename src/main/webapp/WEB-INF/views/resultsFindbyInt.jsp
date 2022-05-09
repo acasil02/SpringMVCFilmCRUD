@@ -32,8 +32,11 @@
 		<input type="submit" value="Go back to Input another ID" />
 	</form>
 
-<form action="updateFilm.do">
-		<input type ="submit" value="Update Film">
+<form action="findByUpdateID.do">
+<label for="id">
+				<input type="text" name="filmId" value = ${film.id } name = "id" hidden>
+				<input type="submit" value="Update Film">
+</label> 
 	</form>
 	
 

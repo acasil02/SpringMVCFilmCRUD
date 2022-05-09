@@ -170,7 +170,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
 			stmt.setInt(3, film.getReleaseYear());
-			stmt.setString(4, film.getLanguage());
+			stmt.setInt(4, 1);
 			stmt.setString(5, film.getRentalDuration());
 			stmt.setDouble(6, film.getRentalRate());
 			stmt.setString(7, film.getLength());
@@ -184,6 +184,8 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 				System.out.println(cf + "Film Added");
 				ResultSet keys = stmt.getGeneratedKeys();
 				if (keys.next()) {
+					film.setId(keys.getInt(1));
+					System.out.println(film.getId());
 					System.out.println("New ID " + keys.getInt(1));
 				}
 
@@ -254,49 +256,47 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 			String sql = "UPDATE film SET title=?, description=?, release_year=?, language_id=?, rental_duration=?, rental_rate=?, length=?, replacement_cost=?, rating=?, special_features=? WHERE film.id = ?";
 
-			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
-			stmt.setInt(3, film.getReleaseYear());
-			stmt.setString(4, film.getLanguage());
+			stmt.setInt(3, film.getReleaseYear() == null ? 0 : film.getReleaseYear());
+			stmt.setInt(4, 1);
 			stmt.setString(5, film.getRentalDuration());
 			stmt.setDouble(6, film.getRentalRate());
 			stmt.setString(7, film.getLength());
 			stmt.setDouble(8, film.getReplacementCost());
 			stmt.setString(9, film.getRating());
 			stmt.setString(10, film.getSpecitalFeatures());
+			System.out.println(film.getId());
 			stmt.setInt(11, film.getId());
 
 			int updateCount = stmt.executeUpdate();
 
 			if (updateCount == 1) {
-				ResultSet keys = stmt.getGeneratedKeys();
-				if (keys.next()) {
-					int updatedFilmId = keys.getInt(1);
-				}
-
-				keys.close();
-
+				stmt = conn.prepareStatement(sql);
+//				if (film.getActorList() != null) {
+//					for (Actor actor : film.getActorList()) {
+//						stmt.setInt(1, film.getFilmId());
+//						updateCount = stmt.executeUpdate();
+//					}
+//				}
+				conn.commit(); // COMMIT TRANSACTION
+				System.out.println(updateCount + "edited film");
 			} else {
-				film = null;
-
+				System.out.println("error editing film");
 			}
-
-			conn.commit();
-			stmt.close();
-			conn.close();
-
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
 				try {
 					conn.rollback();
-				} catch (SQLException sqle2) {
-					System.err.println("Error encountered");
+				} // ROLLBACK TRANSACTION ON ERROR
+				catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
 				}
 			}
+			return null;
 		}
-
 		return film;
 	}
 }

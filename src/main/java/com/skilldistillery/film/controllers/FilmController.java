@@ -41,7 +41,10 @@ public class FilmController {
 	public String getFilmFromSearch() {
 		return "WEB-INF/views/findBySearch.jsp";
 	}
-
+	@RequestMapping(path = { "/", "beginTheUpdate.do" })
+	public String updatButtonPath() {
+		return "WEB-INF/views/UpdateFilm.jsp";
+	}
 	@RequestMapping(path = "CreateFilm.do", method = RequestMethod.POST)
 	public ModelAndView createFilm(Film film, RedirectAttributes redi) {
 		ModelAndView mv = new ModelAndView();
@@ -58,6 +61,16 @@ public class FilmController {
 		Film film = filmDao.findFilmById(filmId);
 		mv.addObject("film", film);
 		mv.setViewName("WEB-INF/views/resultsFindbyInt.jsp");
+
+		return mv;
+
+	}
+	@RequestMapping(path = "findByUpdateID.do", method = RequestMethod.GET)
+	public ModelAndView findFilmByUpdateId(@RequestParam(defaultValue = "000") int filmId) {
+		ModelAndView mv = new ModelAndView();
+		Film film = filmDao.findFilmById(filmId);
+		mv.addObject("film", film);
+		mv.setViewName("WEB-INF/views/UpdateFilm.jsp");
 
 		return mv;
 
@@ -112,9 +125,11 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "updateFilm.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
+	public ModelAndView updateFilm(Integer id, String title, String description, int releaseYear, String language, String rentalDuration,
+			double rentalRate, String length, double replacementCost, String rating, String specitalFeatures, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
-		Film createdFilm = filmDao.updateFilm(film);
+		Film createdFilm = new Film(id, title, description, releaseYear, language, rentalDuration, rentalRate, length, replacementCost, rating, specitalFeatures);
+		createdFilm = filmDao.updateFilm(createdFilm);
 		redir.addFlashAttribute("Film", createdFilm);
 
 
@@ -123,8 +138,8 @@ public class FilmController {
 //
 //		boolean updateConfirm = true;
 //		redir.addFlashAttribute("updateConfirm", updateConfirm);
-
-		mv.setViewName("WEB-INF/views/UpdateFilm.jsp");
+		mv.addObject("film", createdFilm);
+		mv.setViewName("WEB-INF/views/resultsFindbyInt.jsp");
 
 		return mv;
 
