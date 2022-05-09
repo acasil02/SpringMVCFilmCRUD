@@ -18,26 +18,26 @@
 				${film.description } <br>
 				Starring: ${film.cast } <br>
 				${film.categories } <br>
-				<br>
+
 				<form action="findByUpdateID.do">
 					<label for="id"> <input type="text" name="filmId"
 						value=${film.id } name="id" hidden> <input type="submit"
-						value="Update Film">
+						value="Update ${film.title }">
 					</label>
 				</form>
 				<form action="deleteFilm.do">
-				<input type="submit" value="Delete Film" />
+				<input type="submit" value="Delete ${film.title }" />
 				<input style="display:none" name="id" value="${film.id}" />
 			</form>
-	
+	<br>
 			</c:forEach>
 		</c:when>
 		<c:otherwise>
 			<h1>No films found</h1>
 		</c:otherwise>
 	</c:choose>
-	<form action="getFilmFromId.do?">
-		<input type="submit" value="Go back to Input another ID" />
+	<form action="getFilmFromSearch.do?">
+		<input type="submit" value="Go back to input another search" />
 	</form>
 	<form action="home.do">
 		<input type="submit" value="Go Home" />

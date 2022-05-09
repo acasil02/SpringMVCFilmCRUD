@@ -10,7 +10,7 @@
 <h1>Find film by ID</h1>
 <form action="findByID.do" method="GET">
 <label for="id">ID Number:</label> 
-				<input type="text" name="filmId">
+				<input type="number" name="filmId">
 				<input type="submit">
 </form>
 				
