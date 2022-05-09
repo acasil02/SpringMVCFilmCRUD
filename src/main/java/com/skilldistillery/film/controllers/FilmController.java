@@ -36,6 +36,7 @@ public class FilmController {
 	public String getFilmFromID() {
 		return "WEB-INF/views/findByID.jsp";
 	}
+
 	@RequestMapping(path = { "/", "getFilmFromSearch.do" })
 	public String getFilmFromSearch() {
 		return "WEB-INF/views/findBySearch.jsp";
@@ -52,7 +53,7 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "findByID.do", method = RequestMethod.GET)
-	public ModelAndView findFilmById(@RequestParam(defaultValue="000") int filmId) {
+	public ModelAndView findFilmById(@RequestParam(defaultValue = "000") int filmId) {
 		ModelAndView mv = new ModelAndView();
 		Film film = filmDao.findFilmById(filmId);
 		mv.addObject("film", film);
@@ -61,13 +62,13 @@ public class FilmController {
 		return mv;
 
 	}
+
 	@RequestMapping(path = "findBySearch.do", method = RequestMethod.GET)
-	public ModelAndView searchFilm( String userInput) {
+	public ModelAndView searchFilm(String userInput) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> films = filmDao.searchFilm(userInput);
 		mv.addObject("films", films);
 		mv.setViewName("WEB-INF/views/resultsFindbySearch.jsp");
-		
 
 		return mv;
 
@@ -78,13 +79,13 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		Film dbFilm = filmDao.findFilmById(id);
 		if (dbFilm != null) {
-		boolean isDeleted = filmDao.deleteFilm(dbFilm);
-		redir.addFlashAttribute("isFilmDeleted", isDeleted);
-		boolean confirmDeletion = true;
-		redir.addFlashAttribute("confirmDeletion", confirmDeletion);
+			boolean isDeleted = filmDao.deleteFilm(dbFilm);
+			redir.addFlashAttribute("isFilmDeleted", isDeleted);
+			boolean confirmDeletion = true;
+			redir.addFlashAttribute("confirmDeletion", confirmDeletion);
 
 		}
-		
+
 //		mv.addObject(dbFilm);
 		mv.setViewName("redirect:filmDeleted.do");
 		return mv;
@@ -102,6 +103,7 @@ public class FilmController {
 	public ModelAndView updateFilmForm(HttpSession session, Integer filmId) {
 		ModelAndView mv = new ModelAndView();
 		Film current = filmDao.findFilmById(filmId);
+		
 
 		mv.addObject("film", current);
 		mv.setViewName("filmUpdate");
@@ -112,27 +114,31 @@ public class FilmController {
 	@RequestMapping(path = "updateFilm.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
+		Film createdFilm = filmDao.updateFilm(film);
+		redir.addFlashAttribute("Film", createdFilm);
 
-		filmDao.updateFilm(film);
 
-		boolean isUpdated = film.getId() > 0 ? true : false;
-		redir.addFlashAttribute("isFilmUpdated", isUpdated);
+//		boolean isUpdated = film.getId() > 0 ? true : false;
+//		redir.addFlashAttribute("isFilmUpdated", isUpdated);
+//
+//		boolean updateConfirm = true;
+//		redir.addFlashAttribute("updateConfirm", updateConfirm);
 
-		boolean updateConfirm = true;
-		redir.addFlashAttribute("updateConfirm", updateConfirm);
-
-		mv.setViewName("redirect:filmUpdated.do");
+		mv.setViewName("WEB-INF/views/UpdateFilm.jsp");
 
 		return mv;
 
 	}
 
-	@RequestMapping(path = "filmUpdated.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView filmUpdated() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("delete");
-
-		return mv;
-	}
+//	@RequestMapping(path = "filmUpdated.do", method = { RequestMethod.POST, RequestMethod.GET })
+//	public ModelAndView filmUpdated(int id) {
+//		ModelAndView mv = new ModelAndView();
+//		Film current = filmDao.findFilmById(id);
+//
+//		mv.addObject("film", current);
+//		mv.setViewName("delete");
+//
+//		return mv;
+//	}
 
 }

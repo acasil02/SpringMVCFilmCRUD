@@ -31,8 +31,6 @@
 	<form action="getFilmFromId.do?">
 		<input type="submit" value="Go back to Input another ID" />
 	</form>
-    <input type="submit" value="Go back to Input another ID" />
-</form>
 
 <form action="updateFilm.do">
 		<input type ="submit" value="Update Film">
